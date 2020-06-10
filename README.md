@@ -12,4 +12,4 @@ Cosa server per eseguire:
 
 Questo codice invia automaticamente una mail con il link per l'acquisto del prodotto quando il prezzo dell'articolo arriva sotto un certo valore.
 
-Per ora funziona solo il locale.
+Per ora funziona solo in locale.
