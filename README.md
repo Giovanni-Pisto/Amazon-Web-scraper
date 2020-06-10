@@ -4,8 +4,7 @@ Versione 0.0.1
 
 Autore: Pisto Giovanni
 
-Cosa server per eseguire:
-
+    Cosa server per eseguire:
     Python versione 3.8.x        
     Beautifulsoup4      
     lxml
