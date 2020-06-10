@@ -1,12 +1,10 @@
-#installare python3 e beautifulsoup4 
-#per far funzionare serve sudo pip3 install lxml
 """
-Scaper AI v 0.0.1 
 @author Pisto Giovanni
 """
 import requests
 from bs4 import BeautifulSoup
 import smtplib
+import time
 
 def check_price():
     url = "https://www.amazon.it/NZXT-CA-H700W-WB-Case-Gaming-Bianco/dp/B076JG8Z6N"
@@ -14,10 +12,8 @@ def check_price():
     soup = BeautifulSoup(requests.get(url,headers=headers).content,'lxml')
     title = soup.find(id='productTitle').get_text(strip=True)
     price = soup.find(id="priceblock_ourprice").get_text()
-    fix_string=price.replace(",",".")
-    converted_price=float(fix_string[0:5])
-    print(title)
-    print(converted_price)
+    fix_string=price.replace(",",".")         #sostituisco la virgola con il punto altrimenti non posso converitre str to float
+    converted_price=float(fix_string[0:5])    #fix_string[0:5] prende solo le prime 5 cifre
     if (converted_price >170.9):
         send_mail()
       
@@ -27,16 +23,18 @@ def send_mail():
     server.ehlo()
     server.starttls()
     server.ehlo()
-    server.login('turfhdturfhd@gmail.com','myvtjweaxbyaomru')
-    subject="prezzo sceso"
-    body="controlla il link\nhttps://www.amazon.it/NZXT-CA-H700W-WB-Case-Gaming-Bianco/dp/B076JG8Z6N"
+    server.login('web.scraper.python@gmail.com','oqmbxwqhcoaerskg') #pass 2 fattori
+    subject="PREZZO SCESO"
+    body="CONTROLLA IL LINK\nhttps://www.amazon.it/NZXT-CA-H700W-WB-Case-Gaming-Bianco/dp/B076JG8Z6N"
     msg=f"Subject:{subject}\n\n{body}"
     server.sendmail(
-        'turfhdturfhd@gmail.com',
+        'web.scraper.python@gmail.com',
         'pistogiovannii@gmail.com',
         msg
     )
-    print("email inviata")
+    print("E-MAIL INVIATA")
     server.quit
 
-check_price()
+while(True):
+    check_price()
+    time.sleep(21600)#controlla ogni 6 ore il tempo va messo in secondi
