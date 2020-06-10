@@ -30,8 +30,8 @@ def check_price():
                 server.login('web.scraper.python@gmail.com','oqmbxwqhcoaerskg') #pass 2 fattori
                 subject="PREZZO SCESO"
                 body="CONTROLLA IL LINK\n"
-                object_=title
-                link=url
+                object_=title #titolo del prodotto
+                link=url      #link del relativo prodotto
                 msg=f"Subject:{subject}\n\n{body}\n{object_}\n\n{link}"
                 server.sendmail(
                     'web.scraper.python@gmail.com',
