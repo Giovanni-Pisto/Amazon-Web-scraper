@@ -2,9 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import smtplib
 import time
-#    "https://www.amazon.it/Corsair-Vengeance-Memorie-Desktop-Prestazioni/dp/B0143UM4TC",
-#    "https://www.amazon.it/AMD-Ryzen-5-3600-Processori/dp/B07STGGQ18",
-#    "https://www.amazon.it/Apple-iPhone-Grigio-Siderale-Ricondizionato/dp/B07985C44N"
+
+#   https://www.amazon.it/Corsair-Vengeance-Memorie-Desktop-Prestazioni/dp/B0143UM4TC
+#   https://www.amazon.it/AMD-Ryzen-5-3600-Processori/dp/B07STGGQ18
+#   https://www.amazon.it/Apple-iPhone-Grigio-Siderale-Ricondizionato/dp/B07985C44N
 
 urls = []
 prices=[]
@@ -36,7 +37,7 @@ def check_price():
             converted_price = float(fix_string[0:5])
             all_product.append(converted_price)
             money_saved=converted_price-price
-            if (converted_price>=price): #capire come controllare ogni elemento della lista con un  float/int
+            if (converted_price<=price): #capire come controllare ogni elemento della lista con un  float/int
                 server = smtplib.SMTP('smtp.gmail.com',587)
                 server.ehlo()
                 server.starttls()
@@ -44,7 +45,7 @@ def check_price():
                 server.login('web.scraper.python@gmail.com','oqmbxwqhcoaerskg') #pass 2 fattori
                 subject="PREZZO SCESO"
                 object_="NOME PROTTO: "+title   #titolo del prodotto
-                body="RISPARMIO CALCOLATO: "+str(money_saved)+" EURO"
+                body="PREZZO INIZIALE: "+str(converted_price)+" EURO\n"+"RISPARMIO CALCOLATO DI CIRCA: "+str(money_saved)+" EURO"
                 link="LINK: "+url               #link del relativo prodotto
                 msg=f"Subject:{subject}\n\n{object_}\n\n{body}\n\n{link}"
                 server.sendmail(
