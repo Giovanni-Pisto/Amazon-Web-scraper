@@ -2,15 +2,29 @@ import requests
 from bs4 import BeautifulSoup
 import smtplib
 import time
+#    "https://www.amazon.it/Corsair-Vengeance-Memorie-Desktop-Prestazioni/dp/B0143UM4TC",
+#    "https://www.amazon.it/AMD-Ryzen-5-3600-Processori/dp/B07STGGQ18",
+#    "https://www.amazon.it/Apple-iPhone-Grigio-Siderale-Ricondizionato/dp/B07985C44N"
 
-urls = [
-    "https://www.amazon.it/Corsair-Vengeance-Memorie-Desktop-Prestazioni/dp/B0143UM4TC",
-    "https://www.amazon.it/AMD-Ryzen-5-3600-Processori/dp/B07STGGQ18",
-    "https://www.amazon.it/Apple-iPhone-Grigio-Siderale-Ricondizionato/dp/B07985C44N",
-]
-prices =[90, 90, 50]
-headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0 Chrome/83.0.4103.97 Safari/537.36'}
+urls = []
+prices=[]
 all_product = []
+n = int(input("Inserisci il numero di prodotti: "))
+
+#agginge il link da controllare
+print("\nInserisci i link:")
+for i in range(0, n): 
+    link = str(input()) 
+    urls.append(link)    
+
+#aggiunge il realtivi prezzi ai link
+print("\nInserisci i prezzi:")
+for i in range(0, n): 
+    money = int(input()) 
+    prices.append(money) 
+
+#headers per i diversi motori di ricerca
+headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0 Chrome/83.0.4103.97 Safari/537.36'}
 
 def check_price():
     for url, price in zip(urls, prices):
@@ -22,7 +36,6 @@ def check_price():
             converted_price = float(fix_string[0:5])
             all_product.append(converted_price)
             money_saved=converted_price-price
-            #print(all_product)
             if (converted_price>=price): #capire come controllare ogni elemento della lista con un  float/int
                 server = smtplib.SMTP('smtp.gmail.com',587)
                 server.ehlo()
