@@ -9,6 +9,7 @@ import time
 
 urls = []
 prices=[]
+all_product = []
 n = int(input("Inserisci il numero di prodotti: "))
 
 #agginge il link da controllare
@@ -35,12 +36,12 @@ def check_price():
         product_title = soup.find(id='productTitle').get_text(strip=True)
         title = soup.find(id='title').get_text(strip=True) 
         try:
-            all_product = []
             products = soup.find(id='priceblock_ourprice').get_text()
             fix_string = products.replace(",", ".")      
             converted_price = float(fix_string[0:6])
             all_product.append(converted_price)
             money_saved=price-converted_price
+            initial_price=converted_price+money_saved
             if (converted_price<=price): 
                 server = smtplib.SMTP('smtp.gmail.com',587)
                 server.ehlo()
@@ -49,7 +50,7 @@ def check_price():
                 server.login('web.scraper.python@gmail.com','oqmbxwqhcoaerskg') 
                 subject="PREZZO SCESO"
                 object_="NOME PROTTO: "+product_title+title  
-                body="PREZZO INIZIALE: "+str(converted_price)+" EURO\n"+"RISPARMIO CALCOLATO DI CIRCA: "+str(money_saved)+" EURO"
+                body="PREZZO INIZIALE: "+str(initial_price)+" EURO\n"+"RISPARMIO CALCOLATO DI CIRCA: "+str(money_saved)+" EURO"
                 link="LINK: "+url               
                 msg=f"Subject:{subject}\n\n{object_}\n\n{body}\n\n{link}"
                 server.sendmail(
@@ -61,19 +62,20 @@ def check_price():
                 server.quit
                 remove_link=str(url)
                 remove_price=price
+                #se manda la mail rimuove link e prezzo dalle liste relative
                 if(urls.index(remove_link)&prices.index(remove_price)):
                     urls.pop((urls.index(remove_link)))
                     prices.pop(prices.index(remove_price))
-                    #all_product.pop(prices.index(remove_price))
         except AttributeError:
             print ("Prezzo non trovato, controlla se il prodotto ha un prezzo esposto")
-    print("Prodotto in attesa:\n"+str(urls))
-    print("\nPrezzi dei prodotti:\n"+str(prices))
-    #print("Prezzi attuali prodotti"+str(all_product))
+    print("\nLink in attesa:\n"+str(urls))
+    print("\nLa tua offerta:\n"+str(prices))
+    print("\nPrezzi attuali:\n"+str(all_product))
+    all_product.clear()
 
 while(True):
     check_price()
-    time.sleep(20)#controlla ogni 3 ore il tempo va messo in secondi
+    time.sleep(1800)#secondi
 
 #   https://www.amazon.it/Corsair-Vengeance-Memorie-Desktop-Prestazioni/dp/B0143UM4TC
 #   https://www.amazon.it/AMD-Ryzen-5-3600-Processori/dp/B07STGGQ18
