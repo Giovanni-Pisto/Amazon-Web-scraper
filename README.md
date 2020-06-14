@@ -1,14 +1,11 @@
 # Web-scraper with Python
 
-Versione 0.0.1
+Questo progetto invia automaticamente una mail con il link per l'acquisto del prodotto interessato quando il prezzo dell'articolo arriva al prezzo desiderato.
 
-Autore: Pisto Giovanni
+## Getting Started
 
-    Cosa server per eseguire:
-    Python versione 3.8.x        
-    Beautifulsoup4      
-    lxml
+These instructions will get you a copy of the project up and running on your local machine for development and testing purpose. See deployments for notes on how to deploy the project on a live system.
 
-Questo codice invia automaticamente una mail con il link per l'acquisto del prodotto quando il prezzo dell'articolo arriva sotto un certo valore.
+### Prerequisites 
 
-Per ora funziona solo in locale.
+What things you need to install the software and how to install them
