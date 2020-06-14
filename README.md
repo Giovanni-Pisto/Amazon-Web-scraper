@@ -1,6 +1,7 @@
-# Web-scraper with Python
+# Amazon Web Scraper - (AWS)
 
 This project automatically sends an email with the link for the purchase of the product concerned when the price of the item reaches the desired price.  When an email is sent, the ulr with the price is automatically eliminated in order to avoid spam of the same email.
+
 
 ## Getting Started
 
