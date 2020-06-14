@@ -19,6 +19,12 @@ What things you need to install the software and how to install them
 
 * enable two-factor authentication google email
 
+### Installing
+
+If you have all the prerequisites installed without any type of error, just run the code like any python file.
+In this case, I suggest you create a folder where it should contain the file.gyp and the two files.txt. 
+Then run ```python3.8 file.gyp``` command
+
 ## Running the tests
 
 You can choose two different ways to test the code. The first is to insert the links and the prices individually, the other way (faster and recommended) is to create two files called respectively ``` urls.txt``` and ``` prices.txt``` where they contain the links and prices. When an email is sent, the ulr with the price is automatically eliminated in order to avoid spam of the same email.
