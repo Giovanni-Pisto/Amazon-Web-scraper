@@ -94,7 +94,7 @@ while True:
         product_title = soup.find(id='productTitle').get_text(strip=True)
         title = soup.find(id='title').get_text(strip=True)     
         try:
-            products = soup.find(id='priceblock_ourprice').get_text()
+            products = soup.find(id='price_inside_buybox').get_text()
             fix_string = products.replace(",", ".")      
             converted_price = float(fix_string[0:6])
 
