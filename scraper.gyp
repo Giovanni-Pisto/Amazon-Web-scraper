@@ -9,17 +9,17 @@ def ask_for_data():
     urls = []
     prices = []
 
-    n = int(input("Inserisci il numero di prodotti: "))
+    n = int(input("Enter the number of products: "))
 
-    #agginge il link da controllare
-    print("\nInserisci i link:")
+    #add the link to check
+    print("\nEnter link:")
 
     for i in range(n): 
         link = input()
         urls.append(link)    
 
-    #aggiunge il realtivi prezzi ai link
-    print("\nInserisci i prezzi:")
+    #adds the relative prices to the links
+    print("\nAdd your price:")
 
     for i in range(n): 
         money = input()
@@ -28,11 +28,11 @@ def ask_for_data():
     return urls, prices
 """
 def read_data():
-    with open('/Users/giovanni/Desktop/cartella senza titolo/urls.txt') as fh:
+    with open('path/urls.txt') as fh:
         text = fh.read()
         urls = text.split('\n')
 
-    with open('/Users/giovanni/Desktop/cartella senza titolo/prices.txt') as fh:
+    with open('path/prices.txt') as fh:
         text = fh.read()
         prices = text.split('\n')
 
@@ -50,23 +50,22 @@ def write_data(urls, prices):
 def send_email(url, price, converted_price):
     money_saved = converted_price-float(price)
     initial_price=converted_price+money_saved
-    print('E-MAIL INVIATA: ', url, price, converted_price)
+    print('E-MAIL SENT: ', url, price, converted_price)
     server = smtplib.SMTP('smtp.gmail.com',587)
     server.ehlo()
     server.starttls()
     server.ehlo()
-    server.login('web.scraper.python@gmail.com','oqmbxwqhcoaerskg') 
+    server.login('from@gmail.com','password') #password = google 2auth pass, search how to set it
     subject="PREZZO SCESO"
-    object_="NOME PROTTO: "+product_title+title  
-    body="PREZZO INIZIALE: "+str(initial_price)+" EURO\n"+"RISPARMIO CALCOLATO DI CIRCA: "+str(money_saved)+" EURO"
+    object_="NAME: "+product_title+title  
+    body="PREZZO INIZIALE: "+str(initial_price)+" EURO\n"+"CALCULATED SAVINGS OF APPROX: "+str(money_saved)+" EURO"
     link="LINK: "+url               
     msg=f"Subject:{subject}\n\n{object_}\n\n{body}\n\n{link}"
     server.sendmail(
-        'web.scraper.python@gmail.com',
-        'pistogiovannii@gmail.com',
+        'from@gmail.com',
+        'to@gmail.com',
         msg
     )
-    print("E-MAIL INVIATA\n")
     server.quit
 
 # --- main ---
@@ -108,14 +107,14 @@ while True:
                 keep_prices.append(price)    
         except AttributeError as ex:
             print('Ex:', ex)
-            print("Prezzo non trovato, controlla se il prodotto ha un prezzo esposto")
+            print("Price not found, check if the product has an exposed price")
 
     # - loop -
     urls = keep_urls
     prices = keep_prices
 
     print(all_products)
-    time.sleep(60)
+    time.sleep(60)#second
 
 # - end -
 write_data(urls, prices)
