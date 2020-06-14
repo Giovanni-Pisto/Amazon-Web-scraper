@@ -20,7 +20,8 @@ enable two-factor authentication google email
 ```
 ## Running the tests
 
-Puoi scegliere due modi diversi per testare il codice. Il primo è inserire singolarmente i link e i prezzi, l'altro modo (più veloce e consigliato) è quello di creare due files chiamati rispettivamemte ```urls.txt``` e ```prices.txt``` dove contengono i link e i prezzi.
+You can choose two different ways to test the code. The first is to insert the links and the prices individually, the other way (faster and recommended) is to create two files called respectively ``` urls.txt``` and ``` prices.txt``` where they contain the links and prices.
+
 ```
 def read_data():
     with open('path/urls.txt') as fh:
@@ -33,6 +34,9 @@ def read_data():
 
     return urls, prices
 ```
-path= where is your file
+
+## Authors
+* Pisto Giovanni
+
 
 
