@@ -44,7 +44,7 @@ def read_data():
 The price scan runs every x seconds, set by changing the value of ```time.sleep(60)```
 
 ## Notes:
-The code works only if there is a price in the sidebar. See example in the figure. ![alt text](https://imgur.com/a/j33R2pR)
+The code works only if there is a price in the sidebar. See example in the figure. ![Screenshot](note.png)
 
 ## Authors
 * Pisto Giovanni
