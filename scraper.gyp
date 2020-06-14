@@ -74,7 +74,7 @@ def send_email(url, price, converted_price):
 #urls, prices = ask_for_data()
 urls, prices = read_data()
 
-#headers per i diversi motori di ricerca
+#headers for differents browsers
 headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0 Chrome/83.0.4103.97 Safari/537.36'
 }
