@@ -1,6 +1,6 @@
 # Web-scraper with Python
 
-Questo progetto invia automaticamente una mail con il link per l'acquisto del prodotto interessato quando il prezzo dell'articolo arriva al prezzo desiderato.
+This project automatically sends an email with the link for the purchase of the product concerned when the price of the item reaches the desired price. 
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ What things you need to install the software and how to install them
 
 ## Running the tests
 
-You can choose two different ways to test the code. The first is to insert the links and the prices individually, the other way (faster and recommended) is to create two files called respectively ``` urls.txt``` and ``` prices.txt``` where they contain the links and prices.
+You can choose two different ways to test the code. The first is to insert the links and the prices individually, the other way (faster and recommended) is to create two files called respectively ``` urls.txt``` and ``` prices.txt``` where they contain the links and prices. When an email is sent, the ulr with the price is automatically eliminated in order to avoid spam of the same email.
 
 ```
 def read_data():
@@ -34,6 +34,7 @@ def read_data():
 
     return urls, prices
 ```
+The price scan runs every x seconds, set by changing the value of ```time.sleep(60)```
 
 ## Authors
 * Pisto Giovanni
