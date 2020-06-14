@@ -56,9 +56,9 @@ def send_email(url, price, converted_price):
     server.starttls()
     server.ehlo()
     server.login('from@gmail.com','password') #password = google 2auth pass, search how to set it
-    subject="PREZZO SCESO"
+    subject="LOWER PRICE"
     object_="NAME: "+product_title+title  
-    body="PREZZO INIZIALE: "+str(initial_price)+" EURO\n"+"CALCULATED SAVINGS OF APPROX: "+str(money_saved)+" EURO"
+    body="INITIAL PRICE: "+str(initial_price)+" EURO\n"+"CALCULATED SAVINGS OF APPROX: "+str(money_saved)+" EURO"
     link="LINK: "+url               
     msg=f"Subject:{subject}\n\n{object_}\n\n{body}\n\n{link}"
     server.sendmail(
