@@ -9,15 +9,15 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites 
 
 What things you need to install the software and how to install them
-```
-Python 3.8.x
 
-BeautifulSoup4
+* Python 3.8.x
 
-lxml
+* BeautifulSoup4
 
-enable two-factor authentication google email
-```
+* lxml
+
+* enable two-factor authentication google email
+
 ## Running the tests
 
 You can choose two different ways to test the code. The first is to insert the links and the prices individually, the other way (faster and recommended) is to create two files called respectively ``` urls.txt``` and ``` prices.txt``` where they contain the links and prices.
