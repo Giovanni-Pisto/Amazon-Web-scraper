@@ -21,3 +21,18 @@ enable two-factor authentication google email
 ## Running the tests
 
 Puoi scegliere due modi diversi per testare il codice. Il primo è inserire singolarmente i link e i prezzi, l'altro modo (più veloce e consigliato) è quello di creare due files chiamati rispettivamemte ```urls.txt``` e ```prices.txt``` dove contengono i link e i prezzi.
+```
+def read_data():
+    with open('path/urls.txt') as fh:
+        text = fh.read()
+        urls = text.split('\n')
+
+    with open('path/prices.txt') as fh:
+        text = fh.read()
+        prices = text.split('\n')
+
+    return urls, prices
+```
+path= where is your file
+
+
