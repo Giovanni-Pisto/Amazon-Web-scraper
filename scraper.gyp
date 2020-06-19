@@ -9,17 +9,17 @@ def ask_for_data():
     urls = []
     prices = []
 
-    n = int(input("Enter the number of products: "))
+    n = int(input("Inserisci il numero di prodotti: "))
 
-    #add the link to check
-    print("\nEnter link:")
+    #agginge il link da controllare
+    print("\nInserisci i link:")
 
     for i in range(n): 
         link = input()
         urls.append(link)    
 
-    #adds the relative prices to the links
-    print("\nAdd your price:")
+    #aggiunge il realtivi prezzi ai link
+    print("\nInserisci i prezzi:")
 
     for i in range(n): 
         money = input()
@@ -28,11 +28,11 @@ def ask_for_data():
     return urls, prices
 """
 def read_data():
-    with open('path/urls.txt') as fh:
+    with open('/Users/giovanni/Desktop/webscraping/urls.txt') as fh:
         text = fh.read()
         urls = text.split('\n')
 
-    with open('path/prices.txt') as fh:
+    with open('/Users/giovanni/Desktop/webscraping/prices.txt') as fh:
         text = fh.read()
         prices = text.split('\n')
 
@@ -49,32 +49,32 @@ def write_data(urls, prices):
 
 def send_email(url, price, converted_price):
     money_saved = converted_price-float(price)
-    initial_price=converted_price+money_saved
-    print('E-MAIL SENT: ', url, price, converted_price)
+    print('E-MAIL INVIATA: ', url, price, converted_price)
     server = smtplib.SMTP('smtp.gmail.com',587)
     server.ehlo()
     server.starttls()
     server.ehlo()
-    server.login('from@gmail.com','password') #password = google 2auth pass, search how to set it
-    subject="LOWER PRICE"
-    object_="NAME: "+product_title+title  
-    body="INITIAL PRICE: "+str(initial_price)+" EURO\n"+"CALCULATED SAVINGS OF APPROX: "+str(money_saved)+" EURO"
+    server.login('web.scraper.python@gmail.com','oqmbxwqhcoaerskg') 
+    subject="PREZZO SCESO"
+    object_="NOME PROTTO: "+product_title+title
+    body="PREZZO INIZIALE: "+str(price)+" EURO\n"+"RISPARMIO CALCOLATO DI CIRCA: "+str(money_saved)+" EURO"
     link="LINK: "+url               
     msg=f"Subject:{subject}\n\n{object_}\n\n{body}\n\n{link}"
     server.sendmail(
-        'from@gmail.com',
-        'to@gmail.com',
+        'web.scraper.python@gmail.com',
+        'pistogiovannii@gmail.com',
         msg
     )
     server.quit
 
+    
 # --- main ---
 
 # - start -
 #urls, prices = ask_for_data()
 urls, prices = read_data()
 
-#headers for differents browsers
+#headers per i diversi motori di ricerca
 headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0 Chrome/83.0.4103.97 Safari/537.36'
 }
@@ -92,29 +92,73 @@ while True:
         #print(r.status_code)
         soup  = BeautifulSoup(r.content, 'lxml')
         product_title = soup.find(id='productTitle').get_text(strip=True)
-        title = soup.find(id='title').get_text(strip=True)     
+        title = soup.find(id='title').get_text(strip=True)
         try:
             products = soup.find(id='price_inside_buybox').get_text()
-            fix_string = products.replace(",", ".")      
-            converted_price = float(fix_string[0:6])
+            if(products!= ""):
+                fix_string = products.replace(",", ".")      
+                converted_price = float(fix_string[0:6])
 
-            all_products.append(converted_price)
+                all_products.append(converted_price)
 
-            if (converted_price <= float(price)): 
-                send_email(url, price, converted_price)
+                if (converted_price <= float(price)): 
+                    send_email(url, price, converted_price)
+                else:
+                    keep_urls.append(url)
+                    keep_prices.append(price)
             else:
-                keep_urls.append(url)
-                keep_prices.append(price)    
-        except AttributeError as ex:
-            print('Ex:', ex)
-            print("Price not found, check if the product has an exposed price")
+                products1 = soup.find(id='priceblock_ourprice').get_text()
+                if(products1 != ""):
+                    fix_string1 = products1.replace(",", ".")      
+                    converted_price1 = float(fix_string1[0:6])
 
+                    all_products.append(converted_price1)
+
+                    if (converted_price1 <= float(price)): 
+                        send_email(url, price, converted_price1)
+                    else:
+                        keep_urls.append(url)
+                        keep_prices.append(price) 
+                else:
+                    products2 = soup.find(id='priceblock_saleprice').get_text()
+                    if(products2!= ""):
+                        fix_string2 = products2.replace(",", ".")      
+                        converted_price2 = float(fix_string2[0:6])
+
+                        all_products.append(converted_price2)
+
+                        if (converted_price2 <= float(price)): 
+                            send_email(url, price, converted_price2)
+                        else:
+                            keep_urls.append(url)
+                            keep_prices.append(price)     
+                    #else:
+        except AttributeError as ex:
+            print("")
+        try:
+            products3 = soup.find(id='priceblock_dealprice').get_text()
+            if(products3!= ""):
+                fix_string3 = products3.replace(",", ".")      
+                converted_price3 = float(fix_string3[0:6])
+
+                all_products.append(converted_price3)
+
+                if (converted_price3 <= float(price)): 
+                    send_email(url, price, converted_price3)
+                else:
+                    keep_urls.append(url)
+                    keep_prices.append(price)
+        except AttributeError:
+            print("")
+
+        
     # - loop -
     urls = keep_urls
     prices = keep_prices
-
+    #print(urls)
+    print(prices)
     print(all_products)
-    time.sleep(60)#second
+    time.sleep(1800)
 
 # - end -
 write_data(urls, prices)
