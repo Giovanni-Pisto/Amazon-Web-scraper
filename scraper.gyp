@@ -56,10 +56,9 @@ def send_email(url, price, converted_price):
     server.ehlo()
     server.login('web.scraper.python@gmail.com','oqmbxwqhcoaerskg') 
     subject="PREZZO SCESO"
-    object_="NOME PROTTO: "+product_title+title
-    body="PREZZO INIZIALE: "+str(price)+" EURO\n"+"RISPARMIO CALCOLATO DI CIRCA: "+str(money_saved)+" EURO"
-    link="LINK: "+url               
-    msg=f"Subject:{subject}\n\n{object_}\n\n{body}\n\n{link}"
+    email_title="NOME PROTTO: "+product_title+title
+    body="PREZZO INIZIALE: "+str(price)+" EURO\n"+"RISPARMIO CALCOLATO DI CIRCA: "+str(money_saved)+" EURO\n\n"+url              
+    msg=f"Subject:{subject}\n\n{email_title}\n\n{body}"
     server.sendmail(
         'web.scraper.python@gmail.com',
         'pistogiovannii@gmail.com',
@@ -67,7 +66,17 @@ def send_email(url, price, converted_price):
     )
     server.quit
 
-    
+def check(prodotti):
+    fix_string = prodotti.replace(",", ".")      
+    converted_price = float(fix_string[0:6])
+
+    all_products.append(converted_price)
+
+    if (converted_price <= float(price)): 
+        send_email(url, price, converted_price)
+    else:
+        keep_urls.append(url)
+        keep_prices.append(price)
 # --- main ---
 
 # - start -
@@ -96,61 +105,21 @@ while True:
         try:
             products = soup.find(id='price_inside_buybox').get_text()
             if(products!= ""):
-                fix_string = products.replace(",", ".")      
-                converted_price = float(fix_string[0:6])
-
-                all_products.append(converted_price)
-
-                if (converted_price <= float(price)): 
-                    send_email(url, price, converted_price)
-                else:
-                    keep_urls.append(url)
-                    keep_prices.append(price)
+                check(products)
             else:
                 products1 = soup.find(id='priceblock_ourprice').get_text()
                 if(products1 != ""):
-                    fix_string1 = products1.replace(",", ".")      
-                    converted_price1 = float(fix_string1[0:6])
-
-                    all_products.append(converted_price1)
-
-                    if (converted_price1 <= float(price)): 
-                        send_email(url, price, converted_price1)
-                    else:
-                        keep_urls.append(url)
-                        keep_prices.append(price) 
+                    check(products1)
                 else:
                     products2 = soup.find(id='priceblock_saleprice').get_text()
                     if(products2!= ""):
-                        fix_string2 = products2.replace(",", ".")      
-                        converted_price2 = float(fix_string2[0:6])
-
-                        all_products.append(converted_price2)
-
-                        if (converted_price2 <= float(price)): 
-                            send_email(url, price, converted_price2)
-                        else:
-                            keep_urls.append(url)
-                            keep_prices.append(price)     
-                    #else:
+                        check(products2) 
+                    else:
+                        products3 = soup.find(id='priceblock_dealprice').get_text()
+                        if(products3!= ""):
+                            check(products3)
         except AttributeError as ex:
-            print("")
-        try:
-            products3 = soup.find(id='priceblock_dealprice').get_text()
-            if(products3!= ""):
-                fix_string3 = products3.replace(",", ".")      
-                converted_price3 = float(fix_string3[0:6])
-
-                all_products.append(converted_price3)
-
-                if (converted_price3 <= float(price)): 
-                    send_email(url, price, converted_price3)
-                else:
-                    keep_urls.append(url)
-                    keep_prices.append(price)
-        except AttributeError:
-            print("")
-
+            print("",ex)
         
     # - loop -
     urls = keep_urls
