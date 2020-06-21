@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-* Python 3.8.x
+* Python 3
 
 * BeautifulSoup4
 
@@ -23,7 +23,7 @@ What things you need to install the software and how to install them
 
 If you have all the prerequisites installed without any type of error, just run the code like any python file.
 In this case, I suggest you create a folder where it should contain the file.gyp and the two files.txt. 
-Then run ```python3.8 file.gyp``` command
+Then run ```python3 file.gyp``` command
 
 ## Running the tests
 
