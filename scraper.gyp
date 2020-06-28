@@ -9,17 +9,17 @@ def ask_for_data():
     urls = []
     prices = []
 
-    n = int(input("Inserisci il numero di prodotti: "))
+    n = int(input("Number of products: "))
 
     #agginge il link da controllare
-    print("\nInserisci i link:")
+    print("\nInsert link:")
 
     for i in range(n): 
         link = input()
         urls.append(link)    
 
     #aggiunge il realtivi prezzi ai link
-    print("\nInserisci i prezzi:")
+    print("\nInsert prices:")
 
     for i in range(n): 
         money = input()
@@ -28,11 +28,11 @@ def ask_for_data():
     return urls, prices
 """
 def read_data():
-    with open('/Users/giovanni/Desktop/webscraping/urls.txt') as fh:
+    with open('path/urls.txt') as fh:
         text = fh.read()
         urls = text.split('\n')
 
-    with open('/Users/giovanni/Desktop/webscraping/prices.txt') as fh:
+    with open('path/prices.txt') as fh:
         text = fh.read()
         prices = text.split('\n')
 
@@ -54,14 +54,14 @@ def send_email(url, price, converted_price):
     server.ehlo()
     server.starttls()
     server.ehlo()
-    server.login('web.scraper.python@gmail.com','oqmbxwqhcoaerskg') 
+    server.login('from@gmail.com','2-auth google pass') 
     subject="PREZZO SCESO"
     email_title="NOME PROTTO: "+product_title+title
     body="PREZZO INIZIALE: "+str(price)+" EURO\n"+"RISPARMIO CALCOLATO DI CIRCA: "+str(money_saved)+" EURO\n\n"+url              
     msg=f"Subject:{subject}\n\n{email_title}\n\n{body}"
     server.sendmail(
-        'web.scraper.python@gmail.com',
-        'pistogiovannii@gmail.com',
+        'from@gmail.com',
+        'to@gmail.com',
         msg
     )
     server.quit
